@@ -15,7 +15,12 @@ public class UnluckyNumbers {
 
     public static int unluckyNumbersCount() {
         // TODO implement
-
-        return 0;
+        int count = 0;
+        for (int i = 1; i < 100000; i++) {
+            if (String.valueOf(i).contains("4") || String.valueOf(i).contains("13")){
+                count ++;
+            }
+        }
+        return count;
     }
 }
