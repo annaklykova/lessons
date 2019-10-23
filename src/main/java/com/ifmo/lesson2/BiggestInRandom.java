@@ -22,7 +22,7 @@ public class BiggestInRandom {
         // TODO implement
         int a = 100; // Начальное значение диапазона - "от"
         int b = 999; // Конечное значение диапазона - "до"
-        int random_number = a + (int) (Math.random() * b);
+        int random_number = (int) (Math.random() * ((b - a) + 1)) + a;
         System.out.println(random_number);
         Random r = new Random();
         r.nextInt(999);
