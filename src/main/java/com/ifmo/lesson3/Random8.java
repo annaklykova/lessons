@@ -14,7 +14,7 @@ public class Random8 {
         // TODO implement
         System.out.println();
         int[] replacedWithZeros = replaceWithZeros(randomNumbers);
-        for (int r:randomNumbers
+        for (int r:replacedWithZeros
              ) {
             System.out.print(r+" ");
         }
