@@ -7,7 +7,8 @@ package com.ifmo.lesson4;
  */
 public class LinkedList {
     /** Ссылка на первый элемент списка. */
-    private Item head;
+    public Item head;
+    public int lenght=0;
 
     /**
      * Добавляет значение в конец списка.
@@ -18,12 +19,14 @@ public class LinkedList {
         // TODO implement
        if (head==null){
            head = new Item(val);
+           lenght++;
        } else  {
            Item item = head;
 
            while (true) {
                if (item.next == null){
                    item.next = new Item(val);
+                   lenght++;
                    return;
                }
                item = item.next;
@@ -45,13 +48,31 @@ public class LinkedList {
         Item item = head;
         if (head == null) return null;
         else {
-            for (int j = 0; j < i; j++) {
-            item = item.next;
-            }
-            return item.value;
+            if (i < lenght) {
+                for (int j = 0; j < i; j++) {
+                    item = item.next;
+                }
+                return item.value;
+            } else return null;
         }
 
     }
+
+    public Item getItem(int i) {
+        // TODO implement
+        Item item = head;
+        if (head == null) return null;
+        else {
+            if (i < lenght) {
+                for (int j = 0; j < i; j++) {
+                    item = item.next;
+                }
+                return item;
+            } else return null;
+        }
+
+    }
+
 
     /**
      * Удаляет значение по индексу и возвращает
@@ -66,18 +87,20 @@ public class LinkedList {
         if (head == null) return null;
         else if (i==0){
             head = head.next;
+            lenght--;
             return tmp.value;
         }
-        else {
-            for (int j = 0; j < i; j++) {
-
-                tmp = item;
-                item = item.next;
-                System.out.println("***" + item.value);
-            }
+        else if (i < lenght) {
+                for (int j = 0; j < i; j++) {
+                    tmp = item;
+                    item = item.next;
+                }
                 tmp.next = item.next;
+                lenght--;
                 return item.value;
             }
+        return null;
         }
+
     }
 

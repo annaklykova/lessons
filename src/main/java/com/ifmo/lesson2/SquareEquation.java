@@ -27,8 +27,8 @@ public class SquareEquation {
         double d = b * b - 4 * a * c;
         if (d < 0) return null;
         else  {
-            array[0] = (-b + Math.sqrt(d) / 2 * a);
-            array[1] = (-b - Math.sqrt(d) / 2 * a);
+            array[0] = ((-b + Math.sqrt(d)) / (2 * a));
+            array[1] = ((-b - Math.sqrt(d)) / (2 * a));
             return array;
         }
     }
