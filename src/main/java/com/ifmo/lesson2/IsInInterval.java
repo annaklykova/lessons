@@ -20,7 +20,7 @@ public class IsInInterval {
         // TODO implement
         int a = 5; // Начальное значение диапазона - "от"
         int b = 155; // Конечное значение диапазона - "до"
-        int random_number = a + (int) (Math.random() * b);
+        int random_number = (int) (Math.random() * ((b - a) + 1)) + a;
 
         return random_number;
     }

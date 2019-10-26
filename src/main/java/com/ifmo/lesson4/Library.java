@@ -82,7 +82,7 @@ public class Library {
     public int take(Book book, int quantity) {
         // TODO implement
         for (int i = 0; i < lib.length; i++) {
-            if (lib[i].book.author.equals(book.author) && lib[i].book.title.equals(book.title)){
+            if (!(lib[i]==null) && lib[i].book.author.equals(book.author) && lib[i].book.title.equals(book.title)){
                 int quantityToTake = lib[i].quantity;
                 if (lib[i].quantity<=quantity) {
                     lib[i] = null;
