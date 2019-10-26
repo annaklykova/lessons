@@ -52,12 +52,24 @@ public class Library {
      * @return {@code True} if book successfully added, {@code false} otherwise.
      */
     public boolean put(Book book, int quantity) {
+        if (bookCellNumber(book)>=0) {
+            lib[bookCellNumber(book)].quantity += quantity;
+            return true;
+        } else
         for (int i = 0; i < lib.length; i++) {
             if (lib[i]==null) {
                lib[i]= new BookCell(book,quantity);
                return true;
             }
         }  return false;
+    }
+
+    public int bookCellNumber(Book book){
+        for (int i = 0; i < lib.length; i++) {
+            if (!(lib[i]==null) && lib[i].book.author.equals(book.author) && lib[i].book.title.equals(book.title)){
+                return i;
+            }
+        } return -1;
     }
 
     /**
