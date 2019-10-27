@@ -12,7 +12,13 @@ public class SymmetricClocks {
 
     public static int symmetricTimes() {
         // TODO implement
-
-        return 0;
+        int count = 0;
+        for(int i=0;i<=23;i++){
+            for(int j=0;j<=59;j++){
+                if(i/10%10==j%10&i%10==j/10%10){
+                    count++;
+                }
+            }
+        }return count;
     }
 }
