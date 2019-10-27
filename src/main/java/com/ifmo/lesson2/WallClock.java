@@ -31,21 +31,23 @@ public class WallClock {
      */
     public static void main(String[] args) {
         int randomSecond = randomSecond();
-
+        System.out.println(randomSecond);
         String remainingHours = remainingHours(randomSecond);
-
         System.out.println(remainingHours);
     }
 
     public static int randomSecond() {
-        // TODO implement
-
-        return 0;
+        return (int) (Math.random() * 28800);
     }
 
     public static String remainingHours(int rndSecond) {
-        // TODO implement
-
-        return "Осталось менее часа";
+        int hours = rndSecond/60/60;
+        return switch (hours){
+            case 0 -> "Осталось менее часа";
+            case 1 -> "Остался 1 час";
+            case 2,3,4 -> "Осталось "+hours+" часа";
+            case 5,6,7,8 -> "Осталось "+hours+" часов";
+            default -> "Больше 8";
+        };
     }
 }
