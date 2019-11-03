@@ -8,23 +8,33 @@ public class Random15 {
      */
     public static void main(String[] args) {
         int[] randomNumbers = randomNumbers();
-
+        for (int i: randomNumbers
+             ) {
+            System.out.println(i);
+        }
         // TODO implement
 
         int evens = evens(randomNumbers);
-
+        System.out.println(evens);
         // TODO implement
     }
 
     public static int[] randomNumbers() {
-        // TODO implement
-
-        return new int[0];
+        int[] r = new int[15];
+        int a = 0;
+        int b = 9;
+        for (int i = 0; i < r.length; i++) {
+            r[i]= (int) (Math.random() * ((b - a) + 1)) + a;
+        }
+        return r;
     }
 
     private static int evens(int[] arr) {
         // TODO implement
-
-        return 0;
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i]%2==0) count++;
+        }
+        return count;
     }
 }
