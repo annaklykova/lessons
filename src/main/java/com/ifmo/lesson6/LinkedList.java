@@ -7,9 +7,28 @@ import java.util.Iterator;
  * элемент харнит ссылку на следующий. Список
  * оканчивается ссылкой со значением {@code null}.
  */
-public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
+public class LinkedList<T> implements List<T>, Stack<T>, Queue<T>,Cloneable {
     /** Ссылка на первый элемент списка. */
     private Item<T> head;
+    private class Item<T> {
+        /** Значение элемента. */
+        T value;
+
+        /** Ссылка на следующий элемент. */
+        Item<T> next;
+
+        /**
+         * Инициализирует элемент со значением
+         * {@code value}.
+         *
+         * @param value Значение, которое будет сохранено
+         *              в этом элементе.
+         */
+        Item(T value) {
+            this.value = value;
+        }
+    }
+
 
     /** {@inheritDoc} */
     @Override
