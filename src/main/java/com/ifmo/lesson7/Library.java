@@ -117,7 +117,7 @@ public class Library {
     }
 
     private int hashInd(Book book) {
-        return book.hashCode() % lib.length;
+        return Math.abs(book.hashCode()) % lib.length;
     }
 
 }
