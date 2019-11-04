@@ -19,5 +19,15 @@ public class Main {
         accMlt.accumulate(2);
         System.out.println(accMlt.getValue());
 
+        Accumulator accDiv = new Accumulator(100, new Operation() {
+            @Override
+            public double calculate(double a, double b) {
+                return a/b;
+            }
+        });
+        accDiv.accumulate(10);
+        System.out.println("accDiv.getValue() = " + accDiv.getValue());
+
     }
 }
+
