@@ -27,12 +27,7 @@ public class Tasks2 {
     }
 
     private static void sortByPriority(List<Message> messages) {
-        messages.sort(new Comparator<Message>() {
-            @Override
-            public int compare(Message o1, Message o2) {
-                return Integer.compare(o2.getPriority().ordinal(),o1.getPriority().ordinal());
-            }
-            });
+        messages.sort((o1, o2) -> Integer.compare(o2.getPriority().ordinal(),o1.getPriority().ordinal()));
     }
 
     private static NavigableSet<User> sortedByCompanyAndName(List<User> users) {
@@ -59,7 +54,6 @@ public class Tasks2 {
     }
 
     private static <T> Iterator<T> viewIterator(Iterable<T> it1, Iterable<T> it2) {
-
         return null;
     }
 
@@ -89,10 +83,6 @@ public class Tasks2 {
         @Override
         public int compare(User user1, User user2){
             return Integer.compare(user1.getSalary(), user2.getSalary());
-
         }
-
     }
-
-
 }
