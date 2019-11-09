@@ -32,7 +32,7 @@ public class Tasks2 {
 
     private static NavigableSet<User> sortedByCompanyAndName(List<User> users) {
         Comparator<User> comp = new UserCompanyComparator().thenComparing(new UserNameComparator());
-        NavigableSet<User> us = new TreeSet<>(comp);
+        NavigableSet<User> us = new TreeSet<>(Tasks2::compareByCompanyAndName);
         us.addAll(users);
         return us;
     }
@@ -55,6 +55,13 @@ public class Tasks2 {
 
     private static <T> Iterator<T> viewIterator(Iterable<T> it1, Iterable<T> it2) {
         return null;
+    }
+
+    public static int compareByCompanyAndName(User user1,User user2){
+        int result = user1.getCompany().compareTo(user2.getCompany());
+        if (result != 0) return (int)(result/Math.abs(result));
+        result = user1.getName().compareTo(user2.getName());
+        return (result != 0) ? (int)(result/Math.abs(result)) : 0;
     }
 
     public static class UserCompanyComparator implements Comparator<User> {
