@@ -10,6 +10,7 @@ import java.util.Iterator;
 public class LinkedList<T> implements List<T>, Stack<T>, Queue<T>,Cloneable {
     /** Ссылка на первый элемент списка. */
     private Item<T> head;
+
     private class Item<T> {
         /** Значение элемента. */
         T value;
