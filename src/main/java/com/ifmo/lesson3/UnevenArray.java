@@ -8,14 +8,13 @@ public class UnevenArray {
      */
     public static void main(String[] args) {
         int[] unevenArray = unevenArray();
-        for (int i:unevenArray
-             ) {
-            System.out.print(i);
+        for (int i:unevenArray) {
+            System.out.print(i + " ");
         }
         // TODO implement
         System.out.println();
         for (int i = unevenArray.length-1; i >=0 ; i--) {
-            System.out.print(unevenArray[i]);
+            System.out.print(unevenArray[i] + " ");
         }
     }
 
