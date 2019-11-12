@@ -8,7 +8,6 @@ package com.ifmo.lesson4;
 public class LinkedList {
     /** Ссылка на первый элемент списка. */
     public Item head;
-    public int lenght=0;
 
     /**
      * Добавляет значение в конец списка.
@@ -17,24 +16,38 @@ public class LinkedList {
      */
     public void add(Object val) {
         // TODO implement
-       if (head==null){
-           head = new Item(val);
-           lenght++;
-       } else  {
-           Item item = head;
+        if (head == null) {
+            head = new Item(val);
 
-           while (true) {
-               if (item.next == null){
-                   item.next = new Item(val);
-                   lenght++;
-                   return;
-               }
-               item = item.next;
-           }
-       }
+            return;
+        }
 
-
+        //noinspection ConstantConditions
+        find(-1).next = new Item(val);
     }
+
+    private Item find(int i) {
+        if (head == null)
+            return null;
+
+        if (i == 0)
+            return head;
+
+        int cnt = 1;
+
+        for (Item prev = head;;) {
+            Item next = prev.next;
+
+            if (next == null)
+                return i < 0 ? prev : null;
+
+            if (cnt++ == i)
+                return next;
+
+            prev = next;
+        }
+    }
+
 
     /**
      * Извлекает значение из списка по индексу.
@@ -44,34 +57,11 @@ public class LinkedList {
      * или {@code null}, если не найдено.
      */
     public Object get(int i) {
-        // TODO implement
-        Item item = head;
-        if (head == null) return null;
-        else {
-            if (i < lenght) {
-                for (int j = 0; j < i; j++) {
-                    item = item.next;
-                }
-                return item.value;
-            } else return null;
-        }
+        Item item = find(i);
 
+        return item == null ? null : item.value;
     }
 
-    public Item getItem(int i) {
-        // TODO implement
-        Item item = head;
-        if (head == null) return null;
-        else {
-            if (i < lenght) {
-                for (int j = 0; j < i; j++) {
-                    item = item.next;
-                }
-                return item;
-            } else return null;
-        }
-
-    }
 
 
     /**
@@ -82,25 +72,28 @@ public class LinkedList {
      * @return Удаленное значение или {@code null}, если не найдено.
      */
     public Object remove(int i) {
-        Item item = head;
-        Item tmp=head;
-        if (head == null) return null;
-        else if (i==0){
-            head = head.next;
-            lenght--;
-            return tmp.value;
-        }
-        else if (i < lenght) {
-                for (int j = 0; j < i; j++) {
-                    tmp = item;
-                    item = item.next;
-                }
-                tmp.next = item.next;
-                lenght--;
-                return item.value;
-            }
-        return null;
-        }
 
+            if (head == null)
+                return null;
+
+            if (i == 0) {
+                Item h = head;
+
+                head = head.next;
+
+                return h.value;
+            }
+
+            Item prev = find(i - 1);
+            Item cur;
+
+            if (prev != null && (cur = prev.next) != null) {
+                prev.next = cur.next;
+
+                return cur.value;
+            }
+
+            return null;
+        }
     }
 

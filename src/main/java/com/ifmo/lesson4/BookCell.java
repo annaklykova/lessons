@@ -4,7 +4,7 @@ public class BookCell {
     Book book;
     int quantity;
 
-    public BookCell(Book book, int quantity) {
+    BookCell(Book book, int quantity) {
         this.book = book;
         this.quantity = quantity;
     }
@@ -12,7 +12,7 @@ public class BookCell {
     @Override
     public String toString() {
         return "BookCell{" +
-                "book='" + book.author + " " +book.title+ '\'' +
+                "book='" +book.toString()+ '\'' +
                 ", quantity='" + quantity + '\'' +
                 '}';
     }
