@@ -12,9 +12,12 @@ import java.util.List;
 public class IOStreamTasks {
     public static void main(String[] args) throws IOException {
         File src = new File("/Users/ankly/IdeaProjects/lessons/src/main/resources/test.txt");
+        File encrypt = new File("/Users/ankly/IdeaProjects/lessons/src/main/resources/encrypt.txt");
+        File encrypt2 = new File("/Users/ankly/IdeaProjects/lessons/src/main/resources/encrypt2.txt");
         File dst = new File("/Users/ankly/IdeaProjects/lessons/src/main/resources/wap2.txt");
         File dstDir = new File("/Users/ankly/IdeaProjects/lessons/src/main/resources/files/");
         File dstFile = new File("/Users/ankly/IdeaProjects/lessons/src/main/resources/newFile");
+        File password = new File("/Users/ankly/IdeaProjects/lessons/src/main/resources/password.txt");
 
         try (InputStream in = new FileInputStream(src); OutputStream out = new FileOutputStream(dst)) {
             copy(in, out);
@@ -23,6 +26,8 @@ public class IOStreamTasks {
         System.out.println(files);
 
         assembly(files,dstFile);
+
+        encrypt(encrypt,encrypt2,password);
     }
 
     public static void copy(InputStream src, OutputStream dst) throws IOException {
@@ -33,6 +38,8 @@ public class IOStreamTasks {
             while ((len = src.read(buf)) > 0)
                 dst.write(buf, 0, len);
     }
+
+
 
     /**
      * Последовательно разбивает файл на несколько более мелких, равных
@@ -110,6 +117,13 @@ public class IOStreamTasks {
      */
     public static void encrypt(InputStream src, OutputStream dst, String passphrase) throws IOException {
 
+        byte[] key = passphrase.getBytes();
+        byte[] bytes = src.readAllBytes();
+            for (int i = 0, j = 0; i < bytes.length; i++) {
+                bytes[i] ^= key[j];
+                j = j + 1 != key.length ? j + 1 : 0;
+            }
+            dst.write(bytes);
     }
 
     /**
@@ -121,6 +135,15 @@ public class IOStreamTasks {
      * @throws IOException Будет выброшен в случае ошибки.
      */
     public static void encrypt(File src, File dst, File key) throws IOException {
-
+        try (InputStream in = new FileInputStream(src); OutputStream out = new FileOutputStream(dst);
+             InputStream keyF = new FileInputStream(key)) {
+            String res = "";
+            int b = keyF.read();
+            while(b != -1){
+                res = res + (char)b;
+                b = keyF.read();
+            }
+            encrypt(in, out, res);
+        }
     }
 }
