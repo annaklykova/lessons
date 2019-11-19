@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class InputStream {
+public class InputStreamMain {
 
     private String readToString(File file) throws IOException{
         try(FileInputStream in = new FileInputStream(file); ByteArrayOutputStream bout = new ByteArrayOutputStream()){
