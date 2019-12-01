@@ -13,6 +13,8 @@ import java.io.InputStream;
 public class SawInputStream extends InputStream {
     private final int amplitude;
     private final long length;
+    private long count = 0;
+    private int currentAmpl = 0;
 
     public SawInputStream(int amplitude, long length) {
         this.amplitude = amplitude;
@@ -22,6 +24,13 @@ public class SawInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         // TODO implement
-        return 0;
+        int b;
+        if (count < length){
+            count++;
+            currentAmpl = currentAmpl < amplitude? currentAmpl : 0;
+            b = currentAmpl++;
+        } else b =-1;
+        return b;
     }
 }
+
