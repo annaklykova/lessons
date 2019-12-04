@@ -57,7 +57,7 @@ public static final Object monitor = new Object();
         public ProcessorThread(List<String> words) {
             this.words = words;
         }
-        private  synchronized void mergeMap(){
+        private  void mergeMap(){
             synchronized (monitor) {
                 wordMap.forEach((k,v) -> {
                     if (wordTotalMap.containsKey(k)) {
