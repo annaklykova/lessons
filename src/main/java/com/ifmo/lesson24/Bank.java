@@ -101,7 +101,7 @@ public class Bank {
                 Random rnd = new Random();
                 int accountFrom = generateInRange(1,accounts.size()-1,rnd);
                 int accountTo = generateInRange(1,accounts.size()-1,rnd);
-                int amount = generateInRange(1, 3000,rnd);
+                int amount = generateInRange(1, 4000,rnd);
                 @Override
                 public void run() {
                     transferMoney(accounts.get(accountFrom),accounts.get(accountTo),amount);
@@ -133,7 +133,7 @@ public class Bank {
         synchronized (monitor){
             Transaction transaction;
             boolean success;
-            if (amount>from.amount) {
+            if (amount>from.amount || from.id==to.id) {
                 success = false;
             }
             else {
