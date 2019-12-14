@@ -84,11 +84,11 @@ public class Bank {
         Account account7 = new Account(333,789,3000);
         accounts.add(account1);
         accounts.add(account2);
-        accounts.add(account3);
-        accounts.add(account4);
-        accounts.add(account5);
-        accounts.add(account6);
-        accounts.add(account7);
+//        accounts.add(account3);
+//        accounts.add(account4);
+//        accounts.add(account5);
+//        accounts.add(account6);
+//        accounts.add(account7);
         for (Account a: accounts) {
             System.out.println(a.id +" "+a.amount);
         }
@@ -97,23 +97,33 @@ public class Bank {
         threads.add(logger);
 
         for (int i = 0; i < 100; i++) {
-            Thread thread = new Thread(){
-                Random rnd = new Random();
-                int accountFrom = generateInRange(1,accounts.size()-1,rnd);
-                int accountTo = generateInRange(1,accounts.size()-1,rnd);
-                int amount = generateInRange(1, 4000,rnd);
+            Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    transferMoney(accounts.get(accountFrom),accounts.get(accountTo),amount);
-                }
-            };
+                    Random rnd = new Random();
+                    int accountFrom = generateInRange(0,accounts.size()-1,rnd);
+                    int accountTo = generateInRange(0,accounts.size()-1,rnd);
+                    int amount = generateInRange(1, 4000,rnd);
+                        try {
+                            transferMoney(account1,account2,10);
+                            transferMoney(account2,account1,10);
+                            transferMoney(account2,account3,1000);
+//                        transferMoney(accounts.get(accountFrom),accounts.get(accountTo),amount);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+            });
             thread.start();
             threads.add(thread);
+            if (i==99) {
+                for (Account a: accounts) {
+                    System.out.println(a.id +" "+a.amount);
+                }
+            }
         }
 
-        //потоки висят, не завершаются
-        for (Thread t: threads) t.join(0);
-        for (Thread t: threads) t.interrupt();
 
 
 
@@ -128,23 +138,46 @@ public class Bank {
     }
 
     // TODO Самая главная часть работы!
-    public static void transferMoney(Account from, Account to, long amount) {
+    public static void transferMoney(Account from, Account to, long amount) throws InterruptedException {
+        Account monitor1 = from;
+        Account monitor2 = to;
 
-        synchronized (monitor){
-            Transaction transaction;
-            boolean success;
-            if (amount>from.amount || from.id==to.id) {
-                success = false;
+        Thread.sleep(amount);
+        Transaction transaction;
+        boolean success;
+
+        if(from.id <= to.id){
+        synchronized (monitor1) {
+            synchronized (monitor2) {
+                if (amount > from.amount || from.id == to.id) {
+                    success = false;
+                } else {
+                    from.amount = from.amount - amount;
+                    to.amount = to.amount + amount;
+                    success = true;
+                }
             }
-            else {
-                from.amount=from.amount-amount;
-                to.amount = to.amount+amount;
-                success = true;
             }
-            transaction = new Transaction(from.id,to.id,amount,success);
-            transactionQueue.offer(transaction);
+        }
+        else  {synchronized (monitor2) {
+            synchronized (monitor1) {
+                if (amount > from.amount) {
+                    success = false;
+                } else {
+                    from.amount = from.amount - amount;
+                    to.amount = to.amount + amount;
+                    success = true;
+                }
+            }
         }
     }
+                transaction = new Transaction(from.id, to.id, amount, success);
+                transactionQueue.offer(transaction);
+                System.out.println(from.amount + " " + to.amount);
+            }
+
+
+
         // 1. Атомарно и потокобезопасно перевести деньги в количестве 'amount' со счёта 'from' на счёт 'to'.
         // 2. Создать объект Transaction, содержащий информацию об операции и отправить в очередь
         // потоку Logger, который проснётся и напечатает её.
